@@ -1,0 +1,28 @@
+﻿.modal-content {     /* This Modal Content Is Used To Display The Center Of The Screen*/
+    margin-top:10%;  /* To Display 10% from left margin*/
+    margin-left:10%; /* To Display 10% from left margin*/
+    margin-right:10%; /* To Display 10% from right margin*/
+    border-radius: 4px;
+    padding: 10px;
+}
+.modal-title::after {
+    border-top: 1px solid #eee;
+    content: "";
+    display: block;
+    height: 1px;
+    margin: 16px 0 -12px;
+    width: 100%;
+}
+.modal-header,
+.modal-footer {
+    border: none;
+}
+.modal-backdrop {
+    bottom: 0;
+}
+.modal-body{
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    padding: 16px;
+}

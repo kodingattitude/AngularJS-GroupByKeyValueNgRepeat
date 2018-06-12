@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html ng-app="groupbymultipleelementsfunctionality">
+<head>
+    <meta charset="utf-8" />
+    <title>AngularJS - Key, Value Pair Of ng-repeat Using GroupBy Filter With Multiple Elements</title>
+    <!--The Order Of The Links Should Be As Below-->
+    <!--The Below 3 Links Are For Bootsrap Effects, In This Case We Are Using For Modal Popup-->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.4/angular.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-filter/0.4.7/angular-filter.js"></script>
+    <script src="index.js"></script>
+    <link href="StyleSheet.css" rel="stylesheet" />
+</head>
+<body ng-controller="GroupByMultipleElementsController">
+    <div class="form-group container">
+        <div class="row">
+            <h3>AngularJS - Key, Value Pair Of ng-repeat Using GroupBy Filter With Multiple Elements</h3>
+        </div>
+
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Transaction Id</th>
+                            <th>Item Category</th>
+                            <th>Item Code</th>
+                            <th>Item Name</th>
+                            <th>Item Old Price</th>
+                            <th>Item New Price</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-show="filteredItems.length!=0" ng-repeat="(key,value) in filteredItems | groupBy: '[TransactionId,  ItemCategory]'">
+                        <tr ng-show="filteredItems.length!=0" ng-repeat="item in value">
+                            <!-- <td>{{$index}}</td>-->
+                            <td ng-if="$index==0">{{key.split(',')[0]}}</td>
+                            <td ng-if="$index>0" style="border:0px solid black"></td>
+                            <td ng-if="$index==0">{{key.split(',')[1]}}</td>
+                            <td ng-if="$index>0" style="border:0px solid black"></td>
+                            <td ng-if="item.ShowMore">{{ item.ItemCode}}</td>
+                            <td ng-if="item.ShowMore"><input type="checkbox" ng-click="CheckedItem(item)" />{{ item.ItemName}}</td>
+                            <td ng-if="item.ShowMore">{{ item.ItemOldPrice}}</td>
+                            <td ng-if="item.ShowMore">{{ item.ItemNewPrice}}</td>
+                            <td ng-if="$index==0"><a href="" ng-click="ExpandMore(value)">{{(!this.ShowMore) ? value.length-1 : 0}} More</a></td>
+                            <td ng-if="$index==0"><button type="button" data-toggle="modal" data-target="#selectedgroup" ng-click="DisplaySelectedTransaction(value)">Display</button></td>
+                        </tr>
+                        <tr ng-show="filteredItems.length==0" style="text-align:center;font-size:xx-large;color:lightgrey;font:bold 400% arial, verdana;">
+                            <td>
+                                No Records Found
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--Modal Popup-->
+    <div class="modal fade" id="selectedgroup" tabindex="-1" role="dialog" aria-labelledby="groupModalLabel" aria-hidden="true">
+        <div class="modal-body">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="groupModalLabel">Selected Item Details</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Transaction Id</th>
+                                    <th>Item Cateogry</th>
+                                    <th>Item Code</th>
+                                    <th>Item Name</th>
+                                    <th>Item Old Price</th>
+                                    <th>Item New Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-show="selectedGroupItems.length!=0" ng-repeat="item in selectedGroupItems" ng-if="item.checked">
+                                    <td>{{item.TransactionId}}</td>
+                                    <td>{{item.ItemCategory}}</td>
+                                    <td>{{ item.ItemCode}}</td>
+                                    <td>{{item.ItemName}}</td>
+                                    <td>{{ item.ItemOldPrice}}</td>
+                                    <td>{{ item.ItemNewPrice}}</td>
+                                </tr>
+
+                                <tr ng-if="!SelectedTransactions.length" style="text-align:center;color:lightgrey;font:bold 200% arial, verdana;">
+                                    <td>
+                                        No Record Is Checked
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
